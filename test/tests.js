@@ -8,3 +8,36 @@ var chai = require('chai'),
 chai.use(chaiAsPromised);
 var url = process.env.URL || 'http://localhost:8000/todos';
 
+
+/*
+ * Convenience functions
+ */
+function post(url, data) {
+    return request.post(url)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .send(data)
+        .end();
+}
+
+function get(url) {
+    return request.get(url)
+        .set('Accept', 'application/json')
+        .end();
+}
+
+function del(url) {
+    return request.del(url).end();
+}
+
+function update(url, method, data) {
+    return request(method, url)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .send(data)
+        .end();
+}
+
+function assert(result, prop) {
+    return expect(result).to.eventually.have.deep.property(prop);
+}
